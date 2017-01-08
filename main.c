@@ -30,7 +30,10 @@ int main(void){
 
 	PortF_Init();
   while(1){
-		blink();
+		if(isEnableSW1())
+			blink();
+		else
+			setLedColor(pink);
   }
 }
 // Subroutine to initialize port F pins for input and output
@@ -58,12 +61,14 @@ void setLedColor(unsigned int color)
 
 bool isEnableSW1(void)
 {
-	return GPIOF->DATA&0x01;
+	bool result = GPIOF->DATA&0x01;
+	return !result;
 }
 
 bool isEnableSW2(void)
 {
-	return GPIOF->DATA&0x10;
+	bool result = GPIOF->DATA&0x10;
+	return !result;
 }
 
 void delay()
